@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GTA SAMP Community</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-area" id="saLogo" title="Admin Login">
+                <span class="sa-logo">SA</span>
+                <span class="site-title">GTA SAMP</span>
+            </div>
+            <nav class="nav" id="mainNav">
+                <button class="nav-btn" data-page="home">Beranda</button>
+                <button class="nav-btn" data-page="modpack">Modpack</button>
+                <button class="nav-btn" data-page="chat">Chat</button>
+                <button class="nav-btn" data-page="voice">Voice War</button>
+                <button class="nav-btn" data-page="profile" id="profileBtn" style="display:none;">Profil</button>
+                <button class="nav-btn" id="logoutBtn" style="display:none;">Logout</button>
+                <button class="nav-btn" id="loginBtn">Login</button>
+            </nav>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Login Modal -->
+            <div id="loginModal" class="modal">
+                <div class="modal-content">
+                    <h2>Login / Daftar</h2>
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" id="authUsername" placeholder="Masukkan username">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="authPassword" placeholder="Masukkan password">
+                    </div>
+                    <div class="btn-group">
+                        <button id="doLogin">Login</button>
+                        <button id="doRegister">Daftar</button>
+                        <button id="closeLogin">Batal</button>
+                    </div>
+                    <p id="authMessage" class="message"></p>
+                </div>
+            </div>
+
+            <!-- Admin Login Modal -->
+            <div id="adminModal" class="modal">
+                <div class="modal-content">
+                    <h2>Admin Login</h2>
+                    <div class="form-group">
+                        <label>Password Admin</label>
+                        <input type="password" id="adminPassword" placeholder="Masukkan password admin">
+                    </div>
+                    <div class="btn-group">
+                        <button id="doAdminLogin">Login Admin</button>
+                        <button id="closeAdmin">Batal</button>
+                    </div>
+                    <p id="adminMessage" class="message"></p>
+                </div>
+            </div>
+
+            <!-- Home Page -->
+            <section id="homePage" class="page active">
+                <div class="hero">
+                    <h1>Selamat Datang di GTA SAMP Community</h1>
+                    <p>Tempat berbagi modpack, chat real-time, dan voice war untuk komunitas GTA San Andreas Multiplayer.</p>
+                </div>
+                <div class="features">
+                    <div class="feature-card">
+                        <h3>Share Modpack</h3>
+                        <p>Bagikan skin baju, hit sound, skin senjata, skin mobil, Monetloader, ikon, dan lainnya.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Chat Real-time</h3>
+                        <p>Ngobrol langsung dengan member lain. Profil kamu akan terlihat saat chat.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Voice War</h3>
+                        <p>Gabung channel Discord khusus voice war komunitas.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Modpack Page -->
+            <section id="modpackPage" class="page">
+                <h2>Share Modpack</h2>
+                <div class="modpack-form" id="modpackFormArea">
+                    <h3>Upload Modpack Baru</h3>
+                    <div class="form-group">
+                        <label>Judul</label>
+                        <input type="text" id="modTitle" placeholder="Judul modpack">
+                    </div>
+                    <div class="form-group">
+                        <label>Kategori</label>
+                        <select id="modCategory">
+                            <option value="skin_baju">Skin Baju</option>
+                            <option value="hit_sound">Hit Sound</option>
+                            <option value="skin_senjata">Skin Senjata</option>
+                            <option value="skin_mobil">Skin Mobil</option>
+                            <option value="monetloader">Monetloader</option>
+                            <option value="ikon">Ikon Fast</option>
+                            <option value="lainnya">Lainnya</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Deskripsi</label>
+                        <textarea id="modDesc" placeholder="Deskripsi singkat"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Foto / Preview</label>
+                        <input type="file" id="modImage" accept="image/*">
+                    </div>
+                    <div class="form-group">
+                        <label>Link Download (opsional)</label>
+                        <input type="text" id="modLink" placeholder="https://...">
+                    </div>
+                    <button id="uploadMod">Upload Modpack</button>
+                    <p id="modMessage" class="message"></p>
+                </div>
+                <div class="filter-bar">
+                    <button class="filter-btn active" data-filter="all">Semua</button>
+                    <button class="filter-btn" data-filter="skin_baju">Skin Baju</button>
+                    <button class="filter-btn" data-filter="hit_sound">Hit Sound</button>
+                    <button class="filter-btn" data-filter="skin_senjata">Skin Senjata</button>
+                    <button class="filter-btn" data-filter="skin_mobil">Skin Mobil</button>
+                    <button class="filter-btn" data-filter="monetloader">Monetloader</button>
+                    <button class="filter-btn" data-filter="ikon">Ikon Fast</button>
+                </div>
+                <div id="modpackList" class="modpack-list"></div>
+            </section>
+
+            <!-- Chat Page -->
+            <section id="chatPage" class="page">
+                <h2>Chat Real-time</h2>
+                <div class="chat-container">
+                    <div id="chatMessages" class="chat-messages"></div>
+                    <div class="chat-input-area">
+                        <input type="text" id="chatInput" placeholder="Ketik pesan..." disabled>
+                        <button id="sendChat" disabled>Kirim</button>
+                    </div>
+                </div>
+                <p class="chat-note">Login untuk bisa chat. Pesan tersimpan lokal dan sinkron antar tab browser.</p>
+            </section>
+
+            <!-- Voice War Page -->
+            <section id="voicePage" class="page">
+                <h2>Voice War</h2>
+                <div class="voice-box">
+                    <p>Gabung channel Discord Voice War komunitas GTA SAMP.</p>
+                    <a href="https://discord.com/channels/1530620165400694814/1530634577784213594" target="_blank" class="discord-btn">Buka Voice War Discord</a>
+                    <p class="note">Kamu harus sudah join server Discord terlebih dahulu agar bisa mengakses channel tersebut.</p>
+                </div>
+            </section>
+
+            <!-- Profile Page -->
+            <section id="profilePage" class="page">
+                <h2>Edit Profil</h2>
+                <div class="profile-form">
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" id="profileUsername" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Nama Tampilan</label>
+                        <input type="text" id="profileDisplayName" placeholder="Nama yang tampil di chat">
+                    </div>
+                    <div class="form-group">
+                        <label>Bio</label>
+                        <textarea id="profileBio" placeholder="Tentang kamu"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Foto Profil</label>
+                        <input type="file" id="profileImage" accept="image/*">
+                        <div id="profilePreview" class="profile-preview"></div>
+                    </div>
+                    <button id="saveProfile">Simpan Profil</button>
+                    <p id="profileMessage" class="message"></p>
+                </div>
+            </section>
+
+            <!-- Admin Page -->
+            <section id="adminPage" class="page">
+                <h2>Panel Admin</h2>
+                <div class="admin-section">
+                    <h3>Ubah Background Website</h3>
+                    <div class="form-group">
+                        <label>Warna Background</label>
+                        <input type="color" id="bgColor" value="#000000">
+                    </div>
+                    <div class="form-group">
+                        <label>Atau Upload Foto Background</label>
+                        <input type="file" id="bgImage" accept="image/*">
+                    </div>
+                    <button id="applyBg">Terapkan Background</button>
+                    <button id="resetBg">Reset ke Default</button>
+                </div>
+                <div class="admin-section">
+                    <h3>Kelola Modpack</h3>
+                    <div id="adminModList"></div>
+                </div>
+                <div class="admin-section">
+                    <h3>Kelola Akun</h3>
+                    <div id="adminUserList"></div>
+                </div>
+                <button id="adminLogout" class="danger">Logout Admin</button>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>GTA SAMP Community - Black and White Edition</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
